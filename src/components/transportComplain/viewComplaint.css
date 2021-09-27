@@ -1,0 +1,13 @@
+.card {
+  text-align: center;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+  position: relative;
+  display: flex;
+  margin-left: 25%;
+}
+
+.container {
+  padding-top: 20px;
+}

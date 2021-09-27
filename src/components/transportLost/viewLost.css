@@ -1,0 +1,9 @@
+.card {
+  text-align: center;
+  width: 50%;
+  align-content: center;
+  justify-content: center;
+  position: relative;
+  display: flex;
+  margin-left: 25%;
+}
