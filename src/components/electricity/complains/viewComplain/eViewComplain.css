@@ -1,0 +1,39 @@
+.my-card {
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+
+}
+.my-card-row{
+    width: 100%;
+    margin-left: 0;
+    overflow: auto;
+    height: 250px;
+    
+}
+.row-overflow{
+    overflow: auto;
+}
+.my-header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+.main-card{
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 60px;
+
+}
+.my-div{
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+    position: absolute;
+    top: 40px;
+}
+.my-table{
+    margin: 4px 0;
+    
+}

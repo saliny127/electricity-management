@@ -28,6 +28,8 @@ export const e_provinces = db.collection('e_proviences');
 export const e_areaOffices = db.collection('e_areaOffices');
 export const e_areas = db.collection('e_areas');
 export const e_schedules = db.collection('e_schedules');
+export const e_users = db.collection('e_users');
+export const e_complains = db.collection('e_complains');
 
 export default firebase;
 
