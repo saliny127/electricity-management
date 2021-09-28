@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { e_provinces } from 'src/utils/firebase';
+import React, { useEffect } from 'react';
+import { e_areaOffices } from 'src/utils/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Link } from 'react-router-dom';
-import { Container, Col, Table } from 'react-bootstrap'
+import { Container, Table } from 'react-bootstrap'
 import Row from './Row'
 
-const AllPlaces = () => {
-    const query = e_provinces.orderBy('createdAt')
-    const [provinces, loading] = useCollectionData(query, { idField: 'id' })
+const AllOffices = ({ provinces }) => {
+    const query = e_areaOffices.orderBy('createdAt')
+    const [areaOffices, loading] = useCollectionData(query, { idField: 'id' })
 
-    // useEffect(() => {
-    //     e_provinces.get().then(snapshot => {
-    //         setPoviences(firebaseLooper(snapshot));
-    //     })
-    // }, [])
-
-    useEffect(() => {
-        console.log(provinces)
-    }, [provinces])
     return (
         <>
             <Container className="mx-auto">
@@ -25,6 +15,7 @@ const AllPlaces = () => {
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Area Office</th>
                             <th>Province</th>
                             <th>Action</th>
                         </tr>
@@ -33,12 +24,12 @@ const AllPlaces = () => {
                         {loading
                             ?
                             <tr>
-                                <td colSpan="3">
+                                <td colSpan="4">
                                     loading
                                 </td>
                             </tr>
-                            : provinces && provinces.map((data, id) => (
-                                <Row key={id} id={id} data={data} />
+                            : areaOffices && areaOffices.map((data, id) => (
+                                <Row key={id} id={id} data={data} provinces={provinces} />
                             ))}
                     </tbody>
                 </Table>
@@ -47,4 +38,4 @@ const AllPlaces = () => {
     );
 }
 
-export default AllPlaces;
+export default AllOffices;

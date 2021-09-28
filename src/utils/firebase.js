@@ -25,7 +25,8 @@ export const backOfficeCollection = db.collection('BackOffice');
 export const lostDetailsCollection = db.collection('transportLost');
 export const transportComplaintsCollection = db.collection('transportComplaint');
 export const e_provinces = db.collection('e_proviences');
-export const e_places = db.collection('e_places');
+export const e_areaOffices = db.collection('e_areaOffices');
+export const e_areas = db.collection('e_areas');
 export const e_schedules = db.collection('e_schedules');
 
 export default firebase;
