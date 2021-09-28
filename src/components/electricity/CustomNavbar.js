@@ -9,7 +9,8 @@ const CustomNavbar = () => {
                 <Nav className="me-auto">
                     {/* <Link className="nav-link" to="">Places</Link> */}
                     <NavDropdown title="Schedules">
-                        <Link className="dropdown-item" to="/electricity/schedules">View</Link>
+                        <Link className="dropdown-item" to="/electricity/schedules" exact>View</Link>
+                        <Link className="dropdown-item" to="/electricity/schedules/add">Add Schedule</Link>
                     </NavDropdown>
                     <NavDropdown title="Places">
                         <Link className="dropdown-item" to="/electricity/places/all">All</Link>

@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { firebaseLooper } from "src/utils/tools";
 import { e_schedules } from "src/utils/firebase"
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Table } from 'react-bootstrap'
+import { Container, Row, Col, Table, Button } from 'react-bootstrap'
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const AllSchedules = () => {
-    const [sechedules, setSchedules] = useState([])
+    const query = e_schedules.orderBy('createdAt')
+    const [schedules, loading] = useCollectionData(query, { idField: 'id' })
 
-    useEffect(() => {
-        e_schedules.get().then(snapshot => {
-            setSchedules(firebaseLooper(snapshot));
-        })
-    }, [])
+    const handleDelte = id => {
+        e_schedules.doc(id).delete()
+    }
 
+    if (loading) return <h4>Loading</h4>
     return (
         <>
             <Container>
@@ -30,13 +31,17 @@ const AllSchedules = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {sechedules.map((sechedule, id) => (
+                                {schedules.map((schedule, id) => (
                                     <tr key={id}>
                                         <td>{id + 1}</td>
-                                        <td>{sechedule.date}</td>
-                                        <td>{sechedule.timeFrom}</td>
-                                        <td>{sechedule.timeTo}</td>
-                                        <td></td>
+                                        <td>{schedule.date}</td>
+                                        <td>{schedule.timeFrom}</td>
+                                        <td>{schedule.timeTo}</td>
+                                        <td className="p-0">
+                                            <Link className="btn btn-primary" to={`/electricity/schedules/edit/${schedule.id}`}>Edit</Link>
+                                            <Link className="btn btn-warning ml-1" to={`/electricity/schedules/setArea/${schedule.id}`}>Set Areas</Link>
+                                            <Button variant="danger" className="ml-1" onClick={() => handleDelte(schedule.id)}>Delete</Button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

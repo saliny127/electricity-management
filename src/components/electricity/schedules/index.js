@@ -9,6 +9,7 @@ const Schedules = () => {
         <>
             <Route path="/electricity/schedules" exact component={AllSchedules} />
             <Route path="/electricity/schedules/add" exact component={AddSchedule} />
+            <Route path="/electricity/schedules/edit/:id" exact component={AddSchedule} />
             <Route path="/electricity/schedules/setArea/:id" exact component={SetArea} />
         </>
     );
