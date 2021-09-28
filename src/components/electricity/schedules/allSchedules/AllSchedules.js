@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { firebaseLooper } from "../../../utils/tools";
-import { e_schedules } from "../../../utils/firebase"
+import { firebaseLooper } from "src/utils/tools";
+import { e_schedules } from "src/utils/firebase"
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Table } from 'react-bootstrap'
-import Header from '../../header';
-import Footer from '../../footer';
-import '../../home/home.css'
 
 const AllSchedules = () => {
     const [sechedules, setSchedules] = useState([])
@@ -18,11 +15,10 @@ const AllSchedules = () => {
 
     return (
         <>
-            <Header />
             <Container>
                 <Row>
                     <Col xs={12}>
-                        <Link className="btn btn-primary my-2" to="/schedules/add">Add new scheduled power cut</Link>
+                        <Link className="btn btn-primary my-2" to="/electricity/schedules/add">Add new scheduled power cut</Link>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
@@ -48,7 +44,6 @@ const AllSchedules = () => {
                     </Col>
                 </Row>
             </Container>
-            <Footer />
         </>
     );
 }

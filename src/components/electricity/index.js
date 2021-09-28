@@ -6,6 +6,7 @@ import Footer from 'src/components/footer';
 
 import CustomNavbar from './CustomNavbar'
 import Places from './places'
+import Schedules from './schedules';
 import '../home/home.css'
 
 const Electricity = () => {
@@ -15,7 +16,8 @@ const Electricity = () => {
             <CustomNavbar />
             <Switch>
                 <Route path="/electricity/places" component={Places} />
-                <Route path="/" render={() => <Redirect to="/electricity/places/provinces" />} />
+                <Route path="/electricity/schedules" component={Schedules} />
+                <Route path="/" render={() => <Redirect to="/electricity/places/all" />} />
             </Switch>
             <Footer />
         </>

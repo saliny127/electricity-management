@@ -8,6 +8,9 @@ const CustomNavbar = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     {/* <Link className="nav-link" to="">Places</Link> */}
+                    <NavDropdown title="Schedules">
+                        <Link className="dropdown-item" to="/electricity/schedules">View</Link>
+                    </NavDropdown>
                     <NavDropdown title="Places">
                         <Link className="dropdown-item" to="/electricity/places/all">All</Link>
                         <Link className="dropdown-item" to="/electricity/places/provinces">Provinces</Link>

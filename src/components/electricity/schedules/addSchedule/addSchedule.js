@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { useHistory } from 'react-router-dom'
-import { Form, Card } from "react-bootstrap"
-import firebase, { e_schedules } from "../../../utils/firebase"
-import Footer from "../../footer";
-import Header from "../../header";
+import { Form, Card, Container } from "react-bootstrap"
+import firebase, { e_schedules } from "src/utils/firebase"
 
 const AddSchedule = () => {
-
+    const { id } = useParams()
     const [values, setValues] = useState({ date: '', timeFrom: '', timeTo: '' })
+    const [submitting, setSubmitting] = useState(false)
     const [scheduleAreas, setScheduleAreas] = useState([])
 
     const history = useHistory()
@@ -19,26 +19,20 @@ const AddSchedule = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        handleAdd().then(() => {
-            history.push('/schedules')
-        })
-    }
-
-    const handleAdd = () => {
-        return e_schedules.doc().set(values).then(data => {
-            console.log(data)
-            return data
+        setSubmitting(true)
+        e_schedules.add({ ...values, areas: [] }).then(data => {
+            history.push(`/electricity/schedules/setArea/${data.id}`)
+            setSubmitting(false)
         }).catch(e => {
             console.log(e);
         })
     }
 
     return (
-        <>
-            <Header />
+        <Container>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Add powercut schedule</h2>
+                    <h2 className="text-center mb-4">Add Areas</h2>
                     <Form onSubmit={handleFormSubmit}>
                         <div className="form-group">
                             <label>Date</label>
@@ -73,15 +67,13 @@ const AddSchedule = () => {
                             >
                             </input>
                         </div>
-                        <button type="submit" className="btn btn-primary">
-                            ADD
+                        <button type="submit" className="btn btn-primary" disabled={submitting}>
+                            Next
                         </button>
                     </Form>
                 </Card.Body>
             </Card>
-
-            <Footer />
-        </>
+        </Container>
     )
 }
 
