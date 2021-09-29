@@ -79,7 +79,7 @@ const ViewComplaint = () => {
                 <div className="row">
                     <div className="col-sm-6 w-50">
                         <div className="card my-card-row">
-                            <h6 className="card-header my-header bg-dark text-white">Complaint's Details</h6>
+                            <h6 className="card-header my-header bg-dark text-white">Client's Details</h6>
                             <div class="my-div">
 
                                 <table class="table my-table table-bordered">
@@ -167,7 +167,7 @@ const ViewComplaint = () => {
                                         <tr>
                                             <td>Action</td>
                                             <td>
-                                                <Button variant="success" onClick={() => handleStatusChange('sent')}>Open</Button>
+                                                <Button variant="success" onClick={() => handleStatusChange('sent')}>Sent</Button>
                                                 <Button variant="danger" onClick={() => handleStatusChange('rejected')}>Reject</Button>
                                                 <Button variant="warning" onClick={() => handleStatusChange('finished')}>Finish</Button>
                                             </td>
