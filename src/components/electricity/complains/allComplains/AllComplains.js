@@ -20,10 +20,12 @@ const AllComplains = () => {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Reference Num</th>
+                                    <th>Type</th>
+                                    <th>Client</th>
                                     <th>Consumer</th>
-                                    <th>Title</th>
-                                    <th>Content</th>
+                                    <th>Status</th>
+                                    <th>Complaint</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
