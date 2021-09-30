@@ -36,10 +36,10 @@ const AddArea = ({ areaOffices }) => {
         <>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Add Area Office</h2>
+                    <h2 className="text-center mb-4">Add Area</h2>
                     <Form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label>Area office name</label>
+                            <label>Area name</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -47,7 +47,7 @@ const AddArea = ({ areaOffices }) => {
                                 onChange={changeHandler}
                             >
                             </input>
-                            <label>Select province</label>
+                            <label>Select Area Office</label>
                             <select className="form-control" onChange={handleSelectChange} value={areaOffice}>
                                 {areaOffices?.map((pro, id) => (
                                     <option key={id} value={pro.id} >{pro.name}</option>

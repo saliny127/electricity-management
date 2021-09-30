@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useHistory } from 'react-router-dom'
 import { Form, Card, Container, Button } from "react-bootstrap"
-import firebase, { e_complains, clients, e_users } from "src/utils/firebase"
+import firebase, { e_powercut, clients, e_users } from "src/utils/firebase"
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import AddComplain from ".";
 
-const AddComplaint = () => {
+const AddPowercut = () => {
 
 
     const [e_user, loading] = useCollectionData(e_users, { idField: 'id' })
     const [client, clientloading] = useCollectionData(clients, { idField: 'id' })
 
 
-    const [values, setValues] = useState({ account_number: '', user: '', complain_type: '', complaint: '' })
+    const [values, setValues] = useState({ account_number: '', date_time: '', user: '' })
     const [submitting, setSubmitting] = useState(false)
 
     const history = useHistory()
@@ -30,27 +29,31 @@ const AddComplaint = () => {
 
     const handleSelectRegisChange = e => {
         setValues({ ...values, account_number: e.target.value })
-        
-    }
-
-    const handleSelectTypeChange = e => {
-        setValues({ ...values, complain_type: e.target.value })
     }
 
     const handleFormSubmit = (e) => {
+        var timestampDate = new Date();     // this will return current date-time
+        let dateString = values.date_time;
+        if(dateString != ''){
+            // this will return timestamp according to provided date-time
+            dateString = dateString.replace(' ', 'T');
+            timestampDate = new Date(dateString);
+        } 
+        timestampDate = firebase.firestore.Timestamp.fromDate(timestampDate);
+
         e.preventDefault();
         setSubmitting(true)
-       
-        e_complains.add({           
+
+        e_powercut.add({
+            
             account_number: values.account_number, 
             user:values.user,
-            complain_type:values.complain_type,
-            complaint:values.complaint,
+            date_time: timestampDate,
             status: 'pending',
-            description: 'Complaint is received',
+            description: 'reported by customers',
             createdAt: firebase.firestore.FieldValue.serverTimestamp(), 
         }).then(data => {
-            history.push(`/electricity/complains`)
+            history.push(`/electricity/powercut`)
             setSubmitting(false)
         }).catch(e => {
             console.log(e);
@@ -65,12 +68,12 @@ const AddComplaint = () => {
                 <Card.Body>
                     <h2 className="text-center mb-4">{"Add New Power-cut"}</h2>
                     <Form onSubmit={handleFormSubmit}>
-                    <div className="form-group">
+                        <div className="form-group">
                             <label>Account number</label>
                             {clientloading
                                 ? <h5>Loading</h5>
                                 :
-                                <select className="form-control" onChange={handleSelectRegisChange} name={values.account_number}>
+                                <select className="form-control" onChange={handleSelectRegisChange} value={values.account_number}>
                                     {
                                         e_user?.map((e_user, id) => (
                                             <option key={id} value={e_user.registration} >{e_user.registration}</option>
@@ -94,19 +97,12 @@ const AddComplaint = () => {
                             }
                         </div>
                         <div className="form-group">
-                            <label>Complaint type</label>
-                                <select className="form-control" onChange={handleSelectTypeChange} value={values.complain_type}>
-                                    <option value={'Breakdown'} >{'Break-down'}</option>
-                                    <option  value={'Service Request'} >{'Service-request'}</option>
-                                </select>
-                        </div>
-                        <div className="form-group">
-                            <label>Complaint</label>
+                            <label>Date-time</label>
                             <input
-                                value={values.complaint}
+                                value={values.date_time}
                                 type="text"
                                 className="form-control"
-                                name="complaint"
+                                name="date_time"
                                 onChange={handleValueChange}
                             >
                             </input>
@@ -121,4 +117,4 @@ const AddComplaint = () => {
     )
 }
 
-export default AddComplaint;
+export default AddPowercut;

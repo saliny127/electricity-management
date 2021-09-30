@@ -1,9 +1,9 @@
 import React, { Component, useEffect, useState } from 'react';
-import firebase, { e_complains, e_users, clients } from 'src/utils/firebase';
+import firebase, { e_powercut, e_users, clients } from 'src/utils/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import "./eViewComplain.css"
+import "./eViewPowerfaiureComplain.css"
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const initialState = {
@@ -22,7 +22,7 @@ const ViewComplaint = () => {
 
     const { id } = useParams();
 
-    const query = e_complains.where(firebase.firestore.FieldPath.documentId(), '==', id)
+    const query = e_powercut.where(firebase.firestore.FieldPath.documentId(), '==', id)
     const [complain, loading] = useCollectionData(query, { idField: 'id' })
 
     const userQuery = complain && e_users.where('registration', '==', String(complain[0].account_number))
@@ -31,17 +31,19 @@ const ViewComplaint = () => {
     const clientQuery = complain && clients.where('user_id', '==', complain[0].user)
     const [client, clientLoading] = useCollectionData(clientQuery, { idField: 'id' })
 
+    
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setState({ ...state, [name]: value })
     };
 
     const handleStatusChange = status => {
-        e_complains.doc(id).update({ ...complain[0], status })
+        e_powercut.doc(id).update({ ...complain[0], status })
     }
 
     useEffect(() => {
-        e_complains.doc(`${id}`)
+        e_powercut.doc(`${id}`)
             .get()
             .then((snapshot) => {
                 if (snapshot.exists) {
@@ -53,8 +55,6 @@ const ViewComplaint = () => {
             });
     }, [id]);
 
-
-    console.log({ user });
 
     useEffect(() => {
         if (id) {
@@ -71,6 +71,7 @@ const ViewComplaint = () => {
     if (loading || userLoading || clientLoading) return <h5>Loading</h5>
 
     return (
+      
         <div className="card main-card">
             <div className="card-header bg-dark text-center text-white">
                 <strong><h5>INQUIRY DETAILS</h5></strong>
@@ -80,9 +81,9 @@ const ViewComplaint = () => {
                     <div className="col-sm-6 w-50">
                         <div className="card my-card-row">
                             <h6 className="card-header my-header bg-dark text-white">Client's Details</h6>
-                            <div class="my-div">
+                            <div className="my-div">
 
-                                <table class="table my-table table-bordered">
+                                <table className="table my-table table-bordered">
                                     <tbody>
                                         <tr>
                                             <td>Email</td>
@@ -103,16 +104,16 @@ const ViewComplaint = () => {
                         <br />
                         <div className="card my-card-row">
                             <h6 className="card-header my-header bg-dark text-white">Complaint Details</h6>
-                            <div class="my-div">
-                                <table class="table my-table table-bordered">
+                            <div className="my-div">
+                                <table className="table my-table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <td>Type</td>
-                                            <td>{complain && complain[0]?.complain_type}</td>
+                                            <td>Date-time</td>
+                                            <td>{complain && complain[0]?.date_time.toDate().toString().split('G')[0]}</td>
                                         </tr>
                                         <tr>
-                                            <td>Complaint</td>
-                                            <td>{complain && complain[0]?.complaint}</td>
+                                            <td>CreatedAt</td>
+                                            <td>{complain && complain[0]?.createdAt.toDate().toString().split('G')[0]}</td>
                                         </tr>
                                         <tr>
                                             <td>Description</td>
@@ -130,10 +131,10 @@ const ViewComplaint = () => {
                     <div className="col-sm-6">
                         <div className="card my-card-row">
                             <h6 className="card-header bg-dark my-header text-white">Account Details</h6>
-                            <div class="my-div">
+                            <div className="my-div">
 
 
-                                <table class="table my-table table-bordered">
+                                <table className="table my-table table-bordered">
                                     <tbody>
                                         <tr>
                                             <td>Registration number</td>
@@ -144,8 +145,8 @@ const ViewComplaint = () => {
                                             <td>{user && user[0]?.fullname}</td>
                                         </tr>
                                         <tr>
-                                            <td>Complain</td>
-                                            <td>{complaint.complaint}</td>
+                                            <td>Address</td>
+                                            <td>{user && user[0]?.address}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -155,10 +156,10 @@ const ViewComplaint = () => {
                         <br />
                         <div className="card my-card-row">
                             <h6 className="card-header my-header bg-dark text-white">Status</h6>
-                            <div class="my-div">
+                            <div className="my-div">
 
 
-                                <table class="table my-table table-bordered">
+                                <table className="table my-table table-bordered">
                                     <tbody>
                                         <tr>
                                             <td>Status</td>
